@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#123f31">
+  <meta name="description" content="Wanderly — handpicked small-group trips, local guides and honest prices. Explore 46 countries, build a trip budget and book your next escape.">
+  <title>Wanderly — Go further. Feel more.</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Wanderly — Go further. Feel more.">
+  <meta property="og:description" content="Handpicked small-group trips, local guides and honest prices. Find your next story.">
+  <meta property="og:image" content="assets/hero.jpg">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23123f31'/%3E%3Cpath d='M50 20l22 60H28z' fill='%23e3a344'/%3E%3C/svg%3E">
+  <link rel="preload" href="assets/hero.jpg" as="image">
+  <link rel="stylesheet" href="fonts.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ================= HEADER ================= -->
+  <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+  <header class="header" id="header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Wanderly home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="30" height="30"><path d="M16 3l9 22-9-5-9 5z" fill="currentColor"/></svg>
+        </span>
+        <span class="brand-text">Wanderly<small>Explore beyond</small></span>
+      </a>
+
+      <div class="nav-links" id="nav-links">
+        <a class="nav-link is-active" href="#home">Home</a>
+        <a class="nav-link" href="#destinations">Destinations</a>
+        <a class="nav-link" href="#trips">Trips</a>
+        <a class="nav-link" href="#planner">Planner</a>
+        <a class="nav-link" href="#stories">Stories</a>
+        <a class="nav-link" href="#journal">Journal</a>
+      </div>
+
+      <div class="nav-tools">
+        <button class="icon-btn saved-btn" id="saved-btn" aria-haspopup="dialog" aria-controls="saved-dialog" aria-label="View saved trips and places">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 20s-7-4.6-7-9.3A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.7C19 15.4 12 20 12 20z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          <span class="saved-count" id="saved-count" hidden>0</span>
+        </button>
+        <button class="icon-btn account-btn" id="account-button" type="button" aria-label="Sign in to Wanderly" aria-haspopup="dialog">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5.5 20c.5-3.2 2.8-5 6.5-5s6 1.8 6.5 5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          <span id="account-label">Sign in</span>
+        </button>
+        <a class="btn btn-primary nav-cta" href="#planner">Plan my trip <span aria-hidden="true">→</span></a>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-links">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ================= SAVED TRIPS & DESTINATIONS DIALOG ================= -->
+  <dialog class="saved-dialog" id="saved-dialog" aria-labelledby="saved-dialog-title">
+    <div class="saved-dialog-card">
+      <button class="icon-btn saved-dialog-close" id="saved-dialog-close" type="button" aria-label="Close saved trips dialog">×</button>
+
+      <div class="saved-dialog-head">
+        <p class="eyebrow">Your Collection</p>
+        <h2 id="saved-dialog-title">Saved Trips &amp; Wishlist</h2>
+        <p class="saved-dialog-sub">Access, load, or manage your custom travel plans and saved destinations in one place.</p>
+      </div>
+
+      <div class="saved-dialog-tabs" role="tablist" aria-label="Saved collection tabs">
+        <button type="button" class="saved-dialog-tab is-active" id="tab-saved-trips" role="tab" aria-selected="true" aria-controls="panel-saved-trips">
+          <span>Saved Trips</span>
+          <span class="saved-tab-count" id="dialog-trips-count">0</span>
+        </button>
+        <button type="button" class="saved-dialog-tab" id="tab-saved-places" role="tab" aria-selected="false" aria-controls="panel-saved-places">
+          <span>Saved Destinations</span>
+          <span class="saved-tab-count" id="dialog-places-count">0</span>
+        </button>
+      </div>
+
+      <!-- Tab Panel 1: Saved Trip Plans -->
+      <section class="saved-dialog-panel is-active" id="panel-saved-trips" role="tabpanel" aria-labelledby="tab-saved-trips">
+        <div class="saved-dialog-sync-bar">
+          <span class="sync-icon" aria-hidden="true">🔄</span>
+          <span id="dialog-trip-sync">Saved on this device. Sign in to sync across devices.</span>
+        </div>
+        <div class="saved-trips-grid" id="dialog-saved-trips-list"></div>
+        <div class="saved-empty-state" id="dialog-trips-empty" hidden>
+          <div class="empty-icon-wrap" aria-hidden="true">✈</div>
+          <h3>No saved trips yet</h3>
+          <p>Custom trip plans you save in the Trip Planner will appear here with day-by-day itineraries and budgets.</p>
+          <button type="button" class="btn btn-primary btn-sm" id="dialog-jump-planner">Go to Trip Planner <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+
+      <!-- Tab Panel 2: Saved Destinations -->
+      <section class="saved-dialog-panel" id="panel-saved-places" role="tabpanel" aria-labelledby="tab-saved-places" hidden>
+        <div class="saved-places-toolbar" id="dialog-places-toolbar">
+          <span class="saved-places-summary" id="dialog-places-summary">Saved destinations</span>
+          <button class="text-btn" id="dialog-places-clear" type="button">Clear all</button>
+        </div>
+        <ul class="saved-places-list" id="dialog-saved-places-list"></ul>
+        <div class="saved-empty-state" id="dialog-places-empty" hidden>
+          <div class="empty-icon-wrap" aria-hidden="true">♡</div>
+          <h3>No saved places yet</h3>
+          <p>Click the heart icon on any destination card to bookmark it here for quick access.</p>
+          <button type="button" class="btn btn-primary btn-sm" id="dialog-jump-destinations">Explore destinations <span aria-hidden="true">→</span></button>
+        </div>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog class="account-dialog" id="account-dialog" aria-labelledby="account-title">
+    <div class="account-card">
+      <button class="icon-btn account-close" id="account-close" type="button" aria-label="Close account dialog">×</button>
+      <p class="eyebrow">Your Wanderly account</p>
+      <h2 id="account-title">Sign in</h2>
+      <p class="account-intro" id="account-intro">Sign in to sync your saved trips across devices.</p>
+      <p class="account-message" id="account-message" role="status" aria-live="polite" hidden></p>
+
+      <form class="account-form" id="account-form" novalidate>
+        <label class="field account-name-field" id="account-name-field" hidden>
+          <span>Full name</span>
+          <input id="account-name" name="name" type="text" maxlength="80" autocomplete="name" placeholder="Your name">
+        </label>
+        <label class="field">
+          <span>Email address</span>
+          <input id="account-email" name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com">
+        </label>
+        <label class="field">
+          <span>Password</span>
+          <input id="account-password" name="password" type="password" required minlength="6" autocomplete="current-password" placeholder="At least 6 characters">
+        </label>
+        <button class="btn btn-primary account-submit" id="account-submit" type="submit">Sign in</button>
+        <button class="account-demo-btn" id="account-demo-btn" type="button">
+          ⚡ <span>One-click Demo Sign-in</span> <small>(demo@wanderly.com)</small>
+        </button>
+      </form>
+
+      <section class="account-signed-in" id="account-signed-in" hidden>
+        <p>Signed in as <strong id="account-email-label"></strong></p>
+        <p>Your planner trips are synced to your account.</p>
+        <button class="btn btn-ghost" id="account-signout" type="button">Sign out</button>
+      </section>
+
+      <button class="account-toggle" id="account-toggle" type="button">Create a free account</button>
+    </div>
+  </dialog>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="home">
+      <div class="hero-glow glow-a" aria-hidden="true"></div>
+      <div class="hero-glow glow-b" aria-hidden="true"></div>
+
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="hero-badge reveal">
+            <span class="pulse-dot" aria-hidden="true"></span>
+            <span><strong>4.9/5</strong> from 12,480 travellers</span>
+            <span class="badge-dot" aria-hidden="true">·</span>
+            <span>46 countries</span>
+          </p>
+
+          <h1 class="hero-title">
+            <span class="line"><span>Go further.</span></span>
+            <span class="line"><span>Feel <em>more.</em></span></span>
+          </h1>
+
+          <p class="hero-lead">Handpicked routes, real local guides and small groups of nine or fewer. Wanderly turns “someday” into a departure date.</p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#destinations">Explore destinations <span aria-hidden="true">→</span></a>
+            <button class="btn btn-ghost btn-lg" id="hero-video-btn" type="button">
+              <span class="play-dot" aria-hidden="true">▶</span> Watch the film
+            </button>
+          </div>
+
+          <div class="hero-trust">
+            <div class="avatar-stack" aria-hidden="true">
+              <span class="mini-avatar a1">A</span>
+              <span class="mini-avatar a2">R</span>
+              <span class="mini-avatar a3">P</span>
+              <span class="mini-avatar a4">M</span>
+            </div>
+            <p><strong>12,480 trips</strong><small>planned with Wanderly this year</small></p>
+            <span class="stars" aria-label="Rated 4.9 out of 5">★★★★★</span>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="hero-frame">
+            <figure class="hero-slide is-active"><img src="assets/gallery-1.jpg" alt="Turquoise alpine lake with a wooden rowboat" width="1600" height="1000"></figure>
+            <figure class="hero-slide"><img src="assets/gallery-2.jpg" alt="Boat on a still mountain lake in the Dolomites" loading="lazy" width="1600" height="1000"></figure>
+            <figure class="hero-slide"><img src="assets/gallery-3.jpg" alt="Sunrise above a sea of clouds in the Himalayas" loading="lazy" width="1600" height="1000"></figure>
+            <figure class="hero-slide"><img src="assets/gallery-4.jpg" alt="Milky Way rising over snowy mountain peaks" loading="lazy" width="1600" height="1000"></figure>
+            <div class="hero-frame-shade" aria-hidden="true"></div>
+            <div class="hero-chips" role="tablist" aria-label="Choose a hero photo">
+              <button class="hero-dot is-active" role="tab" aria-selected="true" aria-label="Alpine lake" data-slide="0"></button>
+              <button class="hero-dot" role="tab" aria-selected="false" aria-label="Dolomites" data-slide="1"></button>
+              <button class="hero-dot" role="tab" aria-selected="false" aria-label="Himalayas" data-slide="2"></button>
+              <button class="hero-dot" role="tab" aria-selected="false" aria-label="Starry peaks" data-slide="3"></button>
+            </div>
+            <span class="hero-caption" id="hero-caption">Lake Braies · Dolomites, Italy</span>
+          </div>
+
+          <div class="float-card float-rating">
+            <span class="float-icon">★</span>
+            <div><strong>4.9 average</strong><small>2,130 verified reviews</small></div>
+          </div>
+
+          <div class="float-card float-trip">
+            <span class="float-flag">✈</span>
+            <div><small>Next departure</small><strong>Jaipur → Kyoto</strong><small class="float-meta">12 Nov · 4 seats left</small></div>
+          </div>
+
+          <div class="float-sticker" aria-hidden="true">
+            <span>✳</span>
+            <strong>Go where<br>you feel alive.</strong>
+            <small>Your next story awaits</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="container hero-trending">
+        <div class="quick-row">
+          <span class="quick-label">Trending</span>
+          <button class="chip" data-quick="kyoto">Kyoto</button>
+          <button class="chip" data-quick="jaipur">Jaipur</button>
+          <button class="chip" data-quick="bali">Bali</button>
+          <button class="chip" data-quick="maldives">Maldives</button>
+          <button class="chip" data-quick="mountains">Mountains</button>
+          <button class="chip" data-quick="beaches">Beaches</button>
+        </div>
+      </div>
+
+      <div class="stats-band container">
+        <div class="stat"><strong data-count="12480" data-suffix="+">0</strong><small>Travellers hosted</small></div>
+        <div class="stat"><strong data-count="46">0</strong><small>Countries covered</small></div>
+        <div class="stat"><strong data-count="4.9" data-decimals="1">0</strong><small>Average trip rating</small></div>
+        <div class="stat"><strong data-count="98" data-suffix="%">0</strong><small>Would travel again</small></div>
+      </div>
+    </section>
+
+    <!-- ================= MARQUEE ================= -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Small groups of nine</span><b>✳</b><span>Local guides only</span><b>✳</b><span>No hidden fees</span><b>✳</b><span>Carbon-aware routes</span><b>✳</b><span>Free changes up to 21 days</span><b>✳</b><span>Slow travel, real stories</span><b>✳</b>
+        <span>Small groups of nine</span><b>✳</b><span>Local guides only</span><b>✳</b><span>No hidden fees</span><b>✳</b><span>Carbon-aware routes</span><b>✳</b><span>Free changes up to 21 days</span><b>✳</b><span>Slow travel, real stories</span><b>✳</b>
+      </div>
+    </div>
+
+    <!-- ================= DESTINATIONS ================= -->
+    <section class="section destinations" id="destinations">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">The world is waiting</p>
+            <h2>Popular <em>destinations</em></h2>
+            <p class="section-sub">Explore our favourite places or search the web for live ideas about any destination.</p>
+          </div>
+          <a class="section-link" href="#trips">See all departures <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-tabs" role="tablist" aria-label="Filter destinations by style">
+            <button class="tab is-active" role="tab" aria-selected="true" data-filter="all">All</button>
+            <button class="tab" role="tab" aria-selected="false" data-filter="mountains">Mountains</button>
+            <button class="tab" role="tab" aria-selected="false" data-filter="beaches">Beaches</button>
+            <button class="tab" role="tab" aria-selected="false" data-filter="culture">Culture</button>
+            <button class="tab" role="tab" aria-selected="false" data-filter="adventure">Adventure</button>
+            <button class="tab" role="tab" aria-selected="false" data-filter="cities">Cities</button>
+          </div>
+          <label class="sort-wrap">
+            <span>Sort</span>
+            <select id="sort-dest">
+              <option value="recommended">Recommended</option>
+              <option value="price">Price: low to high</option>
+              <option value="rating">Top rated</option>
+              <option value="name">A–Z</option>
+            </select>
+          </label>
+        </div>
+
+        <p class="search-status" id="search-status" role="status" aria-live="polite" hidden>
+          <span id="search-status-text"></span>
+          <button class="text-btn" id="clear-search">Clear filters</button>
+        </p>
+
+        <div class="dest-grid" id="dest-grid">
+          <!-- 1 -->
+          <article class="dest-card" data-id="kyoto" data-styles="culture cities mountains" data-price="68500" data-rating="4.9" data-name="kyoto japan culture food nature cities">
+            <div class="dest-media">
+              <img src="assets/kyoto.jpg" alt="Lantern-lit street in Kyoto with a pagoda at dusk" loading="lazy" width="1200" height="860">
+              <span class="pill pill-region">Japan</span>
+              <button class="heart" data-fav="kyoto" aria-pressed="false" aria-label="Save Kyoto to your list">
+                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M12 20s-7-4.6-7-9.3A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.7C19 15.4 12 20 12 20z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </button>
+              <span class="pill pill-rating">★ 4.9</span>
+            </div>
+            <div class="dest-body">
+              <div class="dest-meta"><span>6 days · 5 nights</span><span class="dest-price">from ₹68,500</span></div>
+              <h3>Slow Days in Kyoto</h3>
+              <p>Temples at dawn, tiny ramen counters and a bamboo forest before the crowds.</p>
+              <div class="dest-foot">
+                <div class="tag-row"><span class="tag">Culture</span><span class="tag">Nature</span></div>
+                <span class="card-cta">View guide <span aria-hidden="true">↗</span></span>
+              </div>
+            </div>
+          </article>
+          <!-- 2 -->
+          <article class="dest-card" data-id="amalfi" data-styles="beaches culture" data-price="92000" data-rating="4.8" data-name="amalfi coast italy positano beach food sea">
+            <div class="dest-media">
+              <img src="assets/amalfi.jpg" alt="Colourful cliffside houses of the Amalfi Coast at golden hour" loading="lazy" width="1200" height="860">
+              <span class="pill pill-region">Italy</span>
+              <button class="heart" data-fav="amalfi" aria-pressed="false" aria-label="Save Amalfi Coast to your list">
+                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M12 20s-7-4.6-7-9.3A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.7C19 15.4 12 20 12 20z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </button>
+              <span class="pill pill-rating">★ 4.8</span>
+            </div>
+            <div class="dest-body">
+              <div class="dest-meta"><span>5 days · 4 nights</span><span class="dest-price">from ₹92,000</span></div>
+              <h3>The Amalfi Feeling</h3>
+              <p>Cliff villages, lemon groves and long lunches that quietly turn into dinner.</p>
+              <div class="dest-foot">
+                <div class="tag-row"><span class="tag">Coast</span><span class="tag">Food</span></div>
+                <span class="card-cta">View guide <span aria-hidden="true">↗</span></span>
+              </div>
+            </div>
+          </article>
+          <!-- 3 -->
+          <article class="dest-card" data-id="himachal" data-styles="mountains adventure" data-price="28900" data-rating="5.0" data-name="himachal pradesh india himalaya mountains adventure trek">
+            <div class="dest-media">
+              <img src="assets/himachal.jpg" alt="Snow-covered Himalayan peaks rising above a sea of clouds" loading="lazy" width="1200" height="860">
+              <span class="pill pill-region">India</span>
+              <button class="heart" data-fav="himachal" aria-pressed="false" aria-label="Save Himachal to your list">
+                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M12 20s-7-4.6-7-9.3A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.7C19 15.4 12 20 12 20z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </button>
+              <span class="pill pill-rating">★ 5.0</span>
+            </div>
+            <div class="dest-body">
+              <div class="dest-meta"><span>7 days · 6 nights</span><span class="dest-price">from ₹28,900</span></div>
+              <h3>Into the Mountains</h3>
+              <p>Pine forests, monastery mornings and the kind of silence you can hear.</p>
+              <div class="dest-foot">
+                <div class="tag-row"><span class="tag">Mountains</span><span class="tag">Adventure</span></div>
+                <span class="card-cta">View guide <span aria-hidden="true">↗</span></span>
+              </div>
+            </div>
+          </article>
+          <!-- 4 -->
+          <article class="dest-card" data-id="bali" data-styles="beaches culture adventure" data-price="54200" data-rating="4.7" data-name="bali indonesia island temple beach wellness surf">
+            <div class="dest-media">
+              <img src="assets/bali.jpg" alt="Balinese temple on a lake surrounded by misty hills" loading="lazy" width="1200" height="860">
+              <span class="pill pill-region">Indonesia</span>
+              <button class="heart" data-fav="bali" aria-pressed="false" aria-label="Save Bali to your list">
+                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M12 20s-7-4.6-7-9.3A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.7C19 15.4 12 20 12 20z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </button>
+              <span class="pill pill-rating">★ 4.7</span>
+            </div>
+            <div class="dest-body">
+              <div class="dest-meta"><span>6 days · 5 nights</span><span class="dest-price">from ₹54,200</span></div>
+              <h3>Bali, Slowly</h3>
+              <p>Rice terraces at sunrise, waterfall swims and warungs worth the detour.</p>
+              <div class="dest-foot">
+                <div class="tag-row"><span class="tag">Island</span><span class="tag">Wellness</span></div>
+                <span class="card-cta">View guide <span aria-hidden="true">↗</span></span>
+              </div>
+            </div>
+          </article>
+          <!-- 5 -->
+          <article class="dest-card" data-id="jaipur" data-styles="culture cities" data-price="18600" data-rating="4.8" data-name="jaipur rajasthan india pink city heritage food forts">
+            <div class="dest-media">
+              <img src="assets/jaipur.jpg" alt="Decorated elephants in front of a pink sandstone palace in Jaipur" loading="lazy" width="1200" height="860">
+              <span class="pill pill-region">India</span>
+              <button class="heart" data-fav="jaipur" aria-pressed="false" aria-label="Save Jaipur to your list">
+                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M12 20s-7-4.6-7-9.3A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.7C19 15.4 12 20 12 20z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </button>
+              <span class="pill pill-rating">★ 4.8</span>
+            </div>
+            <div class="dest-body">
+              <div class="dest-meta"><span>4 days · 3 nights</span><span class="dest-price">from ₹18,600</span></div>
+              <h3>Pink City Diaries</h3>
+              <p>Fort sunrises, block-print workshops and the best kachori of your life.</p>
+              <div class="dest-foot">
+                <div class="tag-row"><span class="tag">Heritage</span><span class="tag">Food</span></div>
+                <span class="card-cta">View guide <span aria-hidden="true">↗</span></span>
+              </div>
+            </div>
+          </article>
+          <!-- 6 -->
+          <article class="dest-card" data-id="maldives" data-styles="beaches" data-price="124000" data-rating="4.9" data-name="maldives island beach overwater villa reef snorkelling luxury">
+            <div class="dest-media">
+              <img src="assets/maldives.jpg" alt="Seaplane beside an overwater villa on a turquoise lagoon" loading="lazy" width="1200" height="860">
+              <span class="pill pill-region">Maldives</span>
+              <button class="heart" data-fav="maldives" aria-pressed="false" aria-label="Save Maldives to your list">
+                <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M12 20s-7-4.6-7-9.3A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.7C19 15.4 12 20 12 20z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+              </button>
+              <span class="pill pill-rating">★ 4.9</span>
+            </div>
+            <div class="dest-body">
+              <div class="dest-meta"><span>5 days · 4 nights</span><span class="dest-price">from ₹1,24,000</span></div>
+              <h3>Overwater Escape</h3>
+              <p>Reef mornings, a hammock that fits your whole afternoon, zero notifications.</p>
+              <div class="dest-foot">
+                <div class="tag-row"><span class="tag">Beach</span><span class="tag">Luxury</span></div>
+                <span class="card-cta">View guide <span aria-hidden="true">↗</span></span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="dest-grid live-results" id="live-results" aria-live="polite" hidden></div>
+
+        <section class="explore-panel" id="destination-explorer" aria-label="Live destination details" hidden>
+          <div class="explore-grid">
+            <div class="explore-card weather-card" id="weather-card" aria-live="polite">
+              <p class="eyebrow">Weather now</p>
+              <p class="explore-loading" id="weather-status">Looking up local weather…</p>
+              <div id="weather-details" hidden></div>
+              <p class="weather-attribution">Forecast by Open-Meteo</p>
+            </div>
+            <div class="explore-card map-card">
+              <div class="explore-card-head">
+                <p class="eyebrow">Find your way</p>
+                <a id="map-link" href="#" target="_blank" rel="noopener noreferrer" hidden>Open map ↗</a>
+              </div>
+              <iframe id="destination-map" title="Map of the searched destination" loading="lazy" hidden></iframe>
+              <p class="explore-loading" id="map-status">Loading map…</p>
+            </div>
+          </div>
+          <div class="explore-card image-card" id="image-card" hidden>
+            <p class="eyebrow">A little inspiration</p>
+            <p class="explore-loading" id="image-status" hidden></p>
+            <div class="destination-images" id="destination-images"></div>
+            <p class="image-credit" id="image-credit">Images are openly licensed; each links to its source and license.</p>
+          </div>
+          <div class="travel-search">
+            <div>
+              <p class="eyebrow">Make it happen</p>
+              <p class="travel-search-note">Search the live web for current flight and hotel information. Check provider sites for final fares and availability.</p>
+            </div>
+            <div class="travel-search-actions">
+              <button class="btn btn-primary" id="search-flights" type="button">Search flights</button>
+              <button class="btn btn-ghost" id="search-hotels" type="button">Find hotels</button>
+            </div>
+          </div>
+          <div class="travel-results" id="travel-results" aria-live="polite" hidden></div>
+        </section>
+
+        <div class="empty-state" id="dest-empty" hidden>
+          <span class="empty-icon" aria-hidden="true">⌖</span>
+          <h3>No destinations match that combination</h3>
+          <p>Try a broader search — or start from one of these.</p>
+          <div class="empty-actions">
+            <button class="chip" data-quick="jaipur">Jaipur</button>
+            <button class="chip" data-quick="kyoto">Kyoto</button>
+            <button class="chip" data-quick="beaches">Beaches</button>
+            <button class="text-btn" id="reset-empty">Show everything</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TRIPS ================= -->
+    <section class="section trips" id="trips">
+      <div class="container">
+        <div class="section-head section-head-light">
+          <div>
+            <p class="eyebrow">Fixed departures, flexible people</p>
+            <h2>Upcoming <em>trips</em></h2>
+            <p class="section-sub">Small groups, local co-travellers and a real human on the other end of the phone.</p>
+          </div>
+          <span class="departure-note"><span class="pulse-dot"></span> 3 departures open this season</span>
+        </div>
+
+        <div class="trip-list">
+          <article class="trip-card" data-trip="dolomites">
+            <div class="trip-media">
+              <img src="assets/trip-dolomites.jpg" alt="Wooden boat on Lake Braies in the Dolomites" loading="lazy" width="900" height="650">
+              <span class="pill pill-light">Bestseller</span>
+            </div>
+            <div class="trip-body">
+              <div class="trip-top">
+                <p class="trip-country">Italy · Dolomites</p>
+                <h3>Alpine Lakes &amp; Huts</h3>
+                <p class="trip-desc">Six days of rifugio breakfasts, mirror-still lakes and ridgelines you will talk about for years.</p>
+              </div>
+              <ul class="trip-facts">
+                <li><span aria-hidden="true">◷</span> 6 days / 5 nights</li>
+                <li><span aria-hidden="true">◍</span> 9 travellers max</li>
+                <li><span aria-hidden="true">▲</span> Moderate</li>
+                <li><span aria-hidden="true">✈</span> 12 Nov</li>
+              </ul>
+              <div class="seats">
+                <div class="seats-bar"><span style="width:67%"></span></div>
+                <small><strong>4 seats left</strong> of 12</small>
+              </div>
+            </div>
+            <div class="trip-buy">
+              <p class="trip-price"><small>from</small> ₹1,08,000<small>/ person</small></p>
+              <button class="btn btn-primary book-btn" data-book="dolomites">Book this trip</button>
+              <button class="text-btn trip-details" data-details="dolomites">See itinerary</button>
+            </div>
+          </article>
+
+          <article class="trip-card" data-trip="goa">
+            <div class="trip-media">
+              <img src="assets/trip-goa.jpg" alt="Golden sunset over a quiet beach in Goa" loading="lazy" width="900" height="650">
+              <span class="pill pill-light">Monsoon pick</span>
+            </div>
+            <div class="trip-body">
+              <div class="trip-top">
+                <p class="trip-country">India · Goa</p>
+                <h3>Off-Season Goa</h3>
+                <p class="trip-desc">Empty beaches, Portuguese bakeries and a sunset cruise with a fisherman who knows the good spots.</p>
+              </div>
+              <ul class="trip-facts">
+                <li><span aria-hidden="true">◷</span> 4 days / 3 nights</li>
+                <li><span aria-hidden="true">◍</span> 12 travellers max</li>
+                <li><span aria-hidden="true">▲</span> Easy</li>
+                <li><span aria-hidden="true">✈</span> 28 Nov</li>
+              </ul>
+              <div class="seats">
+                <div class="seats-bar"><span style="width:56%"></span></div>
+                <small><strong>7 seats left</strong> of 16</small>
+              </div>
+            </div>
+            <div class="trip-buy">
+              <p class="trip-price"><small>from</small> ₹32,400<small>/ person</small></p>
+              <button class="btn btn-primary book-btn" data-book="goa">Book this trip</button>
+              <button class="text-btn trip-details" data-details="goa">See itinerary</button>
+            </div>
+          </article>
+
+          <article class="trip-card" data-trip="meghalaya">
+            <div class="trip-media">
+              <img src="assets/trip-meghalaya.jpg" alt="Green cloud-covered cliffs of Meghalaya" loading="lazy" width="900" height="650">
+              <span class="pill pill-light">Only 2 left</span>
+            </div>
+            <div class="trip-body">
+              <div class="trip-top">
+                <p class="trip-country">India · Meghalaya</p>
+                <h3>Cloud Trail Walk</h3>
+                <p class="trip-desc">Living root bridges, cave swims and homestay dinners in the wettest, greenest corner of India.</p>
+              </div>
+              <ul class="trip-facts">
+                <li><span aria-hidden="true">◷</span> 5 days / 4 nights</li>
+                <li><span aria-hidden="true">◍</span> 9 travellers max</li>
+                <li><span aria-hidden="true">▲</span> Moderate+</li>
+                <li><span aria-hidden="true">✈</span> 05 Dec</li>
+              </ul>
+              <div class="seats">
+                <div class="seats-bar is-low"><span style="width:80%"></span></div>
+                <small><strong>2 seats left</strong> of 10</small>
+              </div>
+            </div>
+            <div class="trip-buy">
+              <p class="trip-price"><small>from</small> ₹41,900<small>/ person</small></p>
+              <button class="btn btn-primary book-btn" data-book="meghalaya">Book this trip</button>
+              <button class="text-btn trip-details" data-details="meghalaya">See itinerary</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PLANNER ================= -->
+    <section class="section planner" id="planner">
+      <div class="container planner-layout">
+        <div class="planner-copy">
+          <p class="eyebrow">Plan it your way</p>
+          <h2>What does <em>your</em> trip cost?</h2>
+          <p class="section-sub">Drag the sliders. Wanderly updates a realistic estimate instantly — no sign-up, no sales call.</p>
+
+          <div class="planner-controls">
+            <div class="planner-search-fields">
+              <div class="planner-field">
+                <label for="planner-destination" class="planner-label">Dream destination</label>
+                <div class="planner-input-wrap">
+                  <span class="planner-input-icon" aria-hidden="true">📍</span>
+                  <input id="planner-destination" type="text" maxlength="120" placeholder="e.g. Kyoto or Patagonia" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="planner-dest-suggestions">
+                  <button type="button" class="field-clear" id="planner-dest-clear" aria-label="Clear destination" hidden>×</button>
+                  <ul class="suggestions planner-suggestions" id="planner-dest-suggestions" role="listbox" hidden></ul>
+                </div>
+              </div>
+              <div class="planner-field">
+                <label for="planner-origin" class="planner-label">Starting city</label>
+                <div class="planner-input-wrap">
+                  <span class="planner-input-icon" aria-hidden="true">✈</span>
+                  <input id="planner-origin" type="text" maxlength="80" value="Jaipur" placeholder="e.g. Jaipur" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list" aria-controls="planner-origin-suggestions">
+                  <button type="button" class="field-clear" id="planner-origin-clear" aria-label="Clear starting city" hidden>×</button>
+                  <ul class="suggestions planner-suggestions" id="planner-origin-suggestions" role="listbox" hidden></ul>
+                </div>
+              </div>
+              <div class="planner-field planner-dates-field">
+                <span class="planner-label">Travel dates</span>
+                <div class="planner-date-pair">
+                  <label class="planner-date-control" for="planner-date">
+                    <span>Depart</span>
+                    <input id="planner-date" type="date">
+                  </label>
+                  <label class="planner-date-control" for="planner-return-date">
+                    <span>Return</span>
+                    <input id="planner-return-date" type="date" aria-describedby="planner-date-help">
+                  </label>
+                </div>
+                <small class="planner-date-help" id="planner-date-help">Choose both dates to set trip length.</small>
+              </div>
+              <div class="planner-field">
+                <label for="planner-style" class="planner-label">Trip style</label>
+                <div class="planner-input-wrap">
+                  <select id="planner-style">
+                    <option value="culture">Culture</option>
+                    <option value="food">Food</option>
+                    <option value="nature">Nature</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="relaxation">Relaxation</option>
+                    <option value="family">Family</option>
+                    <option value="budget">Budget</option>
+                    <option value="luxury">Luxury</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-primary itinerary-button" id="create-itinerary" type="button">Create my AI itinerary <span aria-hidden="true">✳</span></button>
+            <p class="planner-privacy-note">Your destination and trip preferences are sent to Tavily to create the plan. Do not enter personal or sensitive details.</p>
+            <div class="control">
+              <div class="control-head"><label for="days">Trip length</label><output id="days-out">7 days</output></div>
+              <input type="range" id="days" min="3" max="18" value="7" step="1">
+              <div class="range-scale"><span>3 days</span><span>18 days</span></div>
+            </div>
+
+            <div class="control">
+              <div class="control-head"><label for="people">Travellers</label><output id="people-out">2 people</output></div>
+              <input type="range" id="people" min="1" max="8" value="2" step="1">
+              <div class="range-scale"><span>1</span><span>8</span></div>
+            </div>
+
+            <div class="control">
+              <span class="control-head"><span>Comfort level</span></span>
+              <div class="segment" id="comfort" role="radiogroup" aria-label="Comfort level">
+                <button type="button" role="radio" aria-checked="false" data-comfort="0.8">Simple</button>
+                <button type="button" role="radio" aria-checked="true" class="is-active" data-comfort="1">Comfort</button>
+                <button type="button" role="radio" aria-checked="false" data-comfort="1.65">Premium</button>
+              </div>
+            </div>
+
+            <div class="control toggles">
+              <label class="switch"><input type="checkbox" id="flights"><span class="track"></span><span>Include flights</span></label>
+              <label class="switch"><input type="checkbox" id="insurance" checked><span class="track"></span><span>Travel insurance</span></label>
+            </div>
+          </div>
+        </div>
+
+        <aside class="quote-card">
+          <div class="quote-head">
+            <span class="quote-badge">Live estimate</span>
+            <button class="icon-btn" id="quote-share" aria-label="Copy estimate">
+              <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M8 12h8M8 8h8M8 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><rect x="4" y="4" width="16" height="16" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+            </button>
+          </div>
+          <p class="quote-total" id="quote-total">₹0</p>
+          <p class="quote-per" id="quote-per">for 2 travellers · 7 days</p>
+          <div class="planner-budget-field">
+            <label for="planner-budget">Your total budget <span>(optional · INR)</span></label>
+            <input id="planner-budget" type="number" min="1" max="100000000" step="1" inputmode="numeric" placeholder="Use live estimate">
+            <p id="planner-budget-note" aria-live="polite">AI plans use the live estimate unless you set a budget.</p>
+          </div>
+          <p class="cost-profile-note" id="cost-profile-note" aria-live="polite">Add a destination to adjust local costs against India's baseline. All estimates are in INR.</p>
+
+          <div class="breakdown" id="quote-breakdown"></div>
+
+          <div class="quote-route">
+            <p class="quote-route-label">Suggested route for <span id="route-days">7</span> days</p>
+            <ol id="route-list"></ol>
+          </div>
+
+          <div class="quote-itinerary-status" id="quote-itinerary-status" hidden>
+            <div class="quote-itin-pill">
+              <span class="quote-itin-dot" aria-hidden="true"></span>
+              <span id="quote-itin-label">AI Itinerary Ready</span>
+            </div>
+            <a href="#itinerary-panel" class="btn btn-secondary full" id="quote-itin-jump">View Full Itinerary ↓</a>
+          </div>
+
+          <div class="quote-actions">
+            <button class="btn btn-primary" id="quote-save">Save this plan</button>
+            <button class="btn btn-ghost" id="quote-book">Book a call</button>
+          </div>
+          <p class="quote-note">Estimates include stays, local transport, guides and breakfast. Local costs use World Bank price levels when available; flights and insurance are broad estimates, not live quotes.</p>
+          <section class="saved-trips" id="saved-trips" aria-label="Your saved trips" hidden>
+            <div class="saved-trips-head">
+              <h3>Saved trips</h3>
+              <button type="button" class="text-btn" id="open-saved-dialog-btn">View all ↗</button>
+            </div>
+            <p class="saved-trip-sync" id="saved-trip-sync" aria-live="polite"></p>
+            <ul id="saved-trip-list"></ul>
+          </section>
+        </aside>
+      </div>
+
+      <!-- Dedicated Full-Width Trip Itinerary Display -->
+      <div class="container planner-itinerary-container" id="planner-itinerary-container">
+        <section class="itinerary-panel" id="itinerary-panel" aria-live="polite" hidden>
+          <div class="itinerary-header-card">
+            <div class="itinerary-header-main">
+              <div class="itinerary-header-badge">
+                <span class="itinerary-sparkle" aria-hidden="true">✳</span>
+                <span>Personalized AI Plan</span>
+              </div>
+              <h3 id="itinerary-title">Your trip plan</h3>
+              <p class="itinerary-subtitle" id="itinerary-subtitle">Crafted with live destination research, balanced daily pacing, and verified local recommendations.</p>
+              <div class="itinerary-meta" id="itinerary-meta"></div>
+            </div>
+            <div class="itinerary-actions">
+              <button class="btn btn-primary" id="save-itinerary" type="button">
+                <span aria-hidden="true">♥</span> Save trip
+              </button>
+              <button class="btn btn-ghost" id="copy-itinerary" type="button" title="Copy formatted itinerary to clipboard">
+                <span aria-hidden="true">📋</span> Copy
+              </button>
+              <button class="btn btn-ghost" id="print-itinerary" type="button" title="Print or save as PDF">
+                <span aria-hidden="true">🖨️</span> Print
+              </button>
+              <button class="btn btn-ghost" id="toggle-all-days" type="button" title="Expand or collapse all days">
+                <span aria-hidden="true">↕</span> Collapse all
+              </button>
+            </div>
+          </div>
+
+          <nav class="itinerary-nav" id="itinerary-nav" aria-label="Itinerary sections navigation" hidden>
+            <div class="itinerary-nav-scroll" id="itinerary-nav-scroll"></div>
+          </nav>
+
+          <div class="itinerary-answer" id="itinerary-answer"></div>
+
+          <div class="itinerary-sources-card" id="itinerary-sources-card" hidden>
+            <div class="itinerary-sources-head">
+              <span class="sources-icon" aria-hidden="true">🔗</span>
+              <div>
+                <h4 class="itinerary-sources-title" id="itinerary-sources-title">Verified research sources</h4>
+                <p class="itinerary-sources-sub">Destination guides, regional transport archives, and travel data used to craft this plan.</p>
+              </div>
+            </div>
+            <ul class="itinerary-sources" id="itinerary-sources"></ul>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ================= WHY US ================= -->
+    <section class="section why" id="why-us">
+      <div class="container why-layout">
+        <div class="why-art reveal">
+          <div class="art-card">
+            <div class="art-sun" aria-hidden="true"></div>
+            <div class="art-ring" aria-hidden="true"></div>
+            <div class="art-hill h1" aria-hidden="true"></div>
+            <div class="art-hill h2" aria-hidden="true"></div>
+            <div class="art-hill h3" aria-hidden="true"></div>
+            <span class="art-caption">Take the<br>scenic route</span>
+          </div>
+          <div class="art-note">
+            <strong>92%</strong>
+            <small>of travellers say the pace felt “just right”</small>
+          </div>
+        </div>
+
+        <div class="why-copy">
+          <p class="eyebrow">Why Wanderly</p>
+          <h2>Travel more.<br><em>Worry less.</em></h2>
+          <p class="section-sub">We design trips the way we would want them planned for us: fewer stops, longer stays, and someone local who answers the phone.</p>
+
+          <div class="benefits">
+            <button class="benefit" data-benefit="0">
+              <span class="benefit-icon green" aria-hidden="true">✈</span>
+              <span class="benefit-text"><strong>Handpicked, not scraped</strong><small>Every stay is visited by our team first.</small></span>
+              <span class="benefit-arrow" aria-hidden="true">+</span>
+            </button>
+            <button class="benefit" data-benefit="1">
+              <span class="benefit-icon amber" aria-hidden="true">◇</span>
+              <span class="benefit-text"><strong>Priced in the open</strong><small>One price, taxes and tips included.</small></span>
+              <span class="benefit-arrow" aria-hidden="true">+</span>
+            </button>
+            <button class="benefit" data-benefit="2">
+              <span class="benefit-icon green" aria-hidden="true">♡</span>
+              <span class="benefit-text"><strong>Small by design</strong><small>Nine travellers, never a bus queue.</small></span>
+              <span class="benefit-arrow" aria-hidden="true">+</span>
+            </button>
+            <button class="benefit" data-benefit="3">
+              <span class="benefit-icon amber" aria-hidden="true">☏</span>
+              <span class="benefit-text"><strong>Humans on call</strong><small>A real guide, 24/7, on your trip.</small></span>
+              <span class="benefit-arrow" aria-hidden="true">+</span>
+            </button>
+          </div>
+
+          <div class="benefit-detail" id="benefit-detail" aria-live="polite">
+            <p><strong>Handpicked, not scraped.</strong> Our route team sleeps in the homestays, eats at the restaurants and walks every trail before it reaches this page. If it is on Wanderly, someone here has been there.</p>
+          </div>
+
+          <a class="btn btn-primary" href="#journal">Read our travel notes <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= STORIES ================= -->
+    <section class="section stories" id="stories">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Traveller stories</p>
+            <h2>Postcards from <em>the road</em></h2>
+            <p class="section-sub">Real notes from people who took the trip. Sample content for this student concept.</p>
+          </div>
+          <div class="carousel-controls">
+            <button class="round-btn" id="story-prev" aria-label="Previous story">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="round-btn" id="story-next" aria-label="Next story">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="story-viewport">
+          <div class="story-track" id="story-track">
+            <article class="story-card">
+              <span class="quote-mark" aria-hidden="true">“</span>
+              <p class="story-text">Wanderly made my Japan trip so easy and memorable. The Kyoto mornings were the best part of my year — I still think about that ramen counter.</p>
+              <div class="story-foot">
+                <span class="avatar a1">A</span>
+                <div><strong>Ananya Sharma</strong><small>Jaipur → Kyoto · March</small></div>
+                <span class="stars" aria-label="5 out of 5">★★★★★</span>
+              </div>
+            </article>
+            <article class="story-card">
+              <span class="quote-mark" aria-hidden="true">“</span>
+              <p class="story-text">Amazing experience. The recommendations were spot on, the pace was slow enough to actually enjoy it, and nothing felt rushed or touristy.</p>
+              <div class="story-foot">
+                <span class="avatar a2">R</span>
+                <div><strong>Rohan Mehta</strong><small>Mumbai → Amalfi · June</small></div>
+                <span class="stars" aria-label="5 out of 5">★★★★★</span>
+              </div>
+            </article>
+            <article class="story-card">
+              <span class="quote-mark" aria-hidden="true">“</span>
+              <p class="story-text">We booked the Himachal route for our parents and me. The guide called every evening to check in — small things like that made the whole trip feel safe.</p>
+              <div class="story-foot">
+                <span class="avatar a3">P</span>
+                <div><strong>Priya Verma</strong><small>Delhi → Himachal · September</small></div>
+                <span class="stars" aria-label="5 out of 5">★★★★★</span>
+              </div>
+            </article>
+            <article class="story-card">
+              <span class="quote-mark" aria-hidden="true">“</span>
+              <p class="story-text">I asked a hundred questions before booking and got a real answer every time. Our Bali homestay family still messages us on festivals.</p>
+              <div class="story-foot">
+                <span class="avatar a4">M</span>
+                <div><strong>Meera Iyer</strong><small>Bengaluru → Bali · July</small></div>
+                <span class="stars" aria-label="5 out of 5">★★★★★</span>
+              </div>
+            </article>
+            <article class="story-card">
+              <span class="quote-mark" aria-hidden="true">“</span>
+              <p class="story-text">The invoice matched the estimate exactly. No surprise “city tax” at checkout, which is honestly why I would book again.</p>
+              <div class="story-foot">
+                <span class="avatar a5">K</span>
+                <div><strong>Kabir Nair</strong><small>Kochi → Maldives · February</small></div>
+                <span class="stars" aria-label="5 out of 5">★★★★★</span>
+              </div>
+            </article>
+            <article class="story-card">
+              <span class="quote-mark" aria-hidden="true">“</span>
+              <p class="story-text">Two friends, four days in Goa, zero planning stress. The sunset cruise was the highlight, and the bakery list was dangerously good.</p>
+              <div class="story-foot">
+                <span class="avatar a6">S</span>
+                <div><strong>Sara Khan</strong><small>Pune → Goa · November</small></div>
+                <span class="stars" aria-label="5 out of 5">★★★★★</span>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="story-dots" id="story-dots" role="tablist" aria-label="Choose a story"></div>
+      </div>
+    </section>
+
+    <!-- ================= JOURNAL ================= -->
+    <section class="section journal" id="journal">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">The Wanderly journal</p>
+            <h2>Notes, guides &amp; <em>field notes</em></h2>
+            <p class="section-sub">Longer reads from our route team — open one and it expands right here.</p>
+          </div>
+          <a class="section-link" href="#contact">Suggest a story <span aria-hidden="true">↗</span></a>
+        </div>
+
+        <div class="journal-grid">
+          <article class="post post-feature" data-post="kyoto-slow">
+            <div class="post-media"><img src="assets/journal-roadtrip.jpg" alt="A long road winding through green mountains" loading="lazy" width="900" height="600"><span class="pill pill-light">Guide · 8 min</span></div>
+            <div class="post-body">
+              <p class="post-meta">Japan · 12 October 2026</p>
+              <h3>Ten slow days in Kansai — without ticking boxes</h3>
+              <p>How we swapped a checklist of temples for three neighbourhoods, one bike and a lot of vending-machine coffee.</p>
+              <span class="card-cta">Read the story <span aria-hidden="true">↗</span></span>
+            </div>
+          </article>
+
+          <article class="post" data-post="packing">
+            <div class="post-media"><img src="assets/journal-packing.jpg" alt="Red rock road through desert mountains" loading="lazy" width="900" height="600"><span class="pill pill-light">Packing · 4 min</span></div>
+            <div class="post-body">
+              <p class="post-meta">Field notes · 28 September 2026</p>
+              <h3>The 7 kg carry-on that survived a week in the Himalayas</h3>
+              <p>One bag, three layers and the one item our guides insist everyone forgets.</p>
+              <span class="card-cta">Read the story <span aria-hidden="true">↗</span></span>
+            </div>
+          </article>
+
+          <article class="post" data-post="stars">
+            <div class="post-media"><img src="assets/journal-stars.jpg" alt="Starry night sky above mountains" loading="lazy" width="900" height="600"><span class="pill pill-light">Stargazing · 5 min</span></div>
+            <div class="post-body">
+              <p class="post-meta">Ladakh · 04 September 2026</p>
+              <h3>Where to sleep under the Milky Way in India</h3>
+              <p>Five high-altitude camps, one star-spotting checklist and the best month to go.</p>
+              <span class="card-cta">Read the story <span aria-hidden="true">↗</span></span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section faq" id="faq">
+      <div class="container faq-layout">
+        <div class="faq-intro">
+          <p class="eyebrow">Good questions</p>
+          <h2>Before you <em>pack</em></h2>
+          <p class="section-sub">Still unsure? Ask us anything — a person replies within a working day.</p>
+          <a class="btn btn-ghost" href="#contact">Ask a question <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="faq-list" id="faq-list">
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Do I need to pay the full amount to book?<span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>A 25% deposit holds your seat; the balance is due 21 days before departure. Deposits are refundable for 48 hours after booking, no questions asked.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">How big are the groups, really?<span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Nine travellers plus a local guide is our ceiling for mountain trips, twelve for beach trips. Solo travellers make up about 40% of every group.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">What is included in the price?<span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Stays, internal transport, a local guide and breakfast are always included. Flights, lunches, dinners and travel insurance are optional add-ons shown at checkout — never added silently.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Can you accommodate dietary needs or accessibility requirements?<span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Yes. Tell us when booking and we will confirm with every stay on the route before you travel. Two of our trips (Goa and Jaipur) are fully step-free.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">What if I need to change my dates?<span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Changes are free up to 21 days before departure, subject to seats. Inside 21 days we will do our best and tell you the real cost upfront.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">Is this a real booking site?<span class="faq-icon" aria-hidden="true">+</span></button>
+            <div class="faq-a"><p>Not yet — Wanderly is a student front-end concept built with HTML, CSS and vanilla JavaScript. Bookings and reviews are simulated, and your details stay in this browser only.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CONTACT / CTA ================= -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <div class="contact-card">
+          <div class="contact-copy">
+            <p class="eyebrow eyebrow-light">Ready when you are</p>
+            <h2>Let’s plan your <em>dream trip.</em></h2>
+            <p>Tell us the rough idea — a month, a budget, a feeling — and we will send three options within a day.</p>
+            <ul class="contact-list">
+              <li><span aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.4 7.4l7.6 5.6 7.6-5.6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span> hello@wanderly.example</li>
+              <li><span aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6.6 3.6h3l1.4 3.8-2 1.4a12.4 12.4 0 0 0 6.2 6.2l1.4-2 3.8 1.4v3c0 1.2-1 2.1-2.2 2A16.8 16.8 0 0 1 4.6 5.8c0-1.2.9-2.2 2-2.2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span> +91 98290 00000</li>
+              <li><span aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 21c0 0 7-6.3 7-11.2A7 7 0 1 0 5 9.8C5 14.7 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9.6" r="2.6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></span> Jaipur, Rajasthan · IST</li>
+            </ul>
+            <p class="contact-note">Demo form — nothing is sent anywhere outside this page.</p>
+          </div>
+
+          <form class="contact-form" id="contact-form" novalidate>
+            <div class="field">
+              <label for="c-name">Your name</label>
+              <input id="c-name" name="name" type="text" placeholder="Aditi Rao" required minlength="2" autocomplete="name">
+              <small class="error" aria-live="polite"></small>
+            </div>
+            <div class="field">
+              <label for="c-email">Email</label>
+              <input id="c-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
+              <small class="error" aria-live="polite"></small>
+            </div>
+            <div class="field">
+              <label for="c-where">Dream destination</label>
+              <select id="c-where" name="destination">
+                <option>Not sure yet</option>
+                <option>Japan</option><option>Italy</option><option>Himalayas</option>
+                <option>Bali</option><option>Rajasthan</option><option>Maldives</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="c-msg">Tell us more</label>
+              <textarea id="c-msg" name="message" rows="3" placeholder="Two weeks in November, slow pace, good food…"></textarea>
+            </div>
+            <button class="btn btn-amber btn-lg full" type="submit">Send my trip idea <span aria-hidden="true">→</span></button>
+            <p class="form-success" id="contact-success" role="status" hidden>Thanks! Your idea is saved in this browser. We would reply within a day.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a class="brand brand-light" href="#home">
+          <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="30" height="30"><path d="M16 3l9 22-9-5-9 5z" fill="currentColor"/></svg></span>
+          <span class="brand-text">Wanderly<small>Explore beyond</small></span>
+        </a>
+        <p>Good places. Brighter people. Small-group travel for the endlessly curious.</p>
+        <div class="socials">
+          <a href="#home" aria-label="Wanderly on Instagram">ig</a>
+          <a href="#home" aria-label="Wanderly on YouTube">yt</a>
+          <a href="#home" aria-label="Wanderly on WhatsApp">wa</a>
+          <a href="#home" aria-label="Wanderly on Pinterest">pt</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <a href="#destinations">Destinations</a>
+        <a href="#trips">Upcoming trips</a>
+        <a href="#planner">Trip planner</a>
+        <a href="#journal">Journal</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#why-us">Why Wanderly</a>
+        <a href="#stories">Traveller stories</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="footer-col footer-news">
+        <h4>Postcards, monthly</h4>
+        <p>One email a month. Routes, photos, no selling.</p>
+        <form id="newsletter-form" class="newsletter" novalidate>
+          <label class="sr-only" for="nl-email">Email address</label>
+          <input id="nl-email" type="email" placeholder="you@example.com" required autocomplete="email">
+          <button class="btn btn-amber" type="submit" aria-label="Subscribe to the newsletter">→</button>
+        </form>
+        <small class="newsletter-note" id="newsletter-note" role="status"></small>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <small>© <span id="year">2026</span> Wanderly · Student landing page concept</small>
+      <div class="footer-legal"><a href="#faq">Privacy</a><a href="#faq">Terms</a><a href="#home">Back to top ↑</a></div>
+    </div>
+  </footer>
+
+  <button class="to-top" id="to-top" aria-label="Back to top" hidden>
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <!-- ================= MODAL ================= -->
+  <div class="modal-backdrop" id="modal-backdrop" hidden></div>
+  <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <button class="modal-close" id="modal-close" aria-label="Close dialog">×</button>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+
+  <!-- ================= BOOKING DRAWER ================= -->
+  <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>
+  <aside class="drawer" id="booking-drawer" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="drawer-title">
+    <header class="drawer-head">
+      <div>
+        <p class="eyebrow">Book a seat</p>
+        <h2 id="drawer-title">Alpine Lakes &amp; Huts</h2>
+      </div>
+      <button class="icon-btn" id="drawer-close" aria-label="Close booking panel">×</button>
+    </header>
+
+    <div class="drawer-progress" aria-hidden="true">
+      <span class="is-active" data-step-dot="1">1</span><i></i>
+      <span data-step-dot="2">2</span><i></i>
+      <span data-step-dot="3">3</span>
+    </div>
+
+    <form id="booking-form" class="drawer-form" novalidate>
+      <!-- Step 1 -->
+      <div class="drawer-step is-active" data-step="1">
+        <div class="booking-summary" id="booking-summary"></div>
+
+        <div class="field">
+          <label for="b-date">Departure date</label>
+          <select id="b-date" name="date">
+            <option>12 Nov 2026</option>
+            <option>26 Nov 2026</option>
+            <option>10 Dec 2026</option>
+            <option>07 Jan 2027</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <span class="field-label-plain" id="b-travellers-label">Travellers</span>
+          <div class="stepper stepper-lg" role="group" aria-labelledby="b-travellers-label">
+            <button type="button" class="step-btn" data-bstep="-1" aria-label="Remove a traveller">−</button>
+            <output id="b-travellers" aria-live="polite">2</output>
+            <button type="button" class="step-btn" data-bstep="1" aria-label="Add a traveller">+</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-label-plain">Room preference</span>
+          <div class="radio-cards" id="room-cards">
+            <label class="radio-card"><input type="radio" name="room" value="shared" checked><span><strong>Shared twin</strong><small>Included</small></span></label>
+            <label class="radio-card"><input type="radio" name="room" value="single"><span><strong>Private room</strong><small>+ ₹9,500</small></span></label>
+          </div>
+        </div>
+
+        <div class="included">
+          <p class="field-label-plain">Always included</p>
+          <ul class="included-list">
+            <li><span aria-hidden="true">✓</span> Stays &amp; daily breakfast</li>
+            <li><span aria-hidden="true">✓</span> Local guide, every day</li>
+            <li><span aria-hidden="true">✓</span> Internal transport</li>
+            <li><span aria-hidden="true">✓</span> Free changes up to 21 days</li>
+          </ul>
+          <p class="included-note">Only a 25% deposit today. Balance due 21 days before departure.</p>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="drawer-step" data-step="2">
+        <div class="field">
+          <label for="b-name">Full name</label>
+          <input id="b-name" name="name" type="text" placeholder="Aditi Rao" required minlength="2" autocomplete="name">
+          <small class="error" aria-live="polite"></small>
+        </div>
+        <div class="field">
+          <label for="b-email">Email</label>
+          <input id="b-email" name="email" type="email" placeholder="you@example.com" required autocomplete="email">
+          <small class="error" aria-live="polite"></small>
+        </div>
+        <div class="field">
+          <label for="b-phone">Phone</label>
+          <input id="b-phone" name="phone" type="tel" placeholder="+91 98290 00000" required pattern="[0-9+\s()-]{8,16}">
+          <small class="error" aria-live="polite"></small>
+        </div>
+        <div class="field">
+          <label for="b-notes">Anything we should know? <span class="optional">(optional)</span></label>
+          <textarea id="b-notes" name="notes" rows="2" placeholder="Dietary needs, accessibility, celebrations…"></textarea>
+        </div>
+        <label class="switch switch-check"><input type="checkbox" id="b-terms" required><span class="track"></span><span>I agree to the booking terms and 25% deposit</span></label>
+        <small class="error" id="b-terms-error" aria-live="polite"></small>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="drawer-step" data-step="3">
+        <div class="booked">
+          <span class="booked-tick" aria-hidden="true">✓</span>
+          <h3>Seat held!</h3>
+          <p>Your reference is <strong id="booking-ref">WDR-0000</strong>. We would email a deposit link within an hour — this demo stores everything in your browser only.</p>
+          <div class="booked-summary" id="booked-summary"></div>
+          <div class="booked-actions">
+            <button type="button" class="btn btn-primary" id="add-calendar">Add to calendar</button>
+            <button type="button" class="btn btn-ghost" id="booked-done">Done</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <footer class="drawer-foot" id="drawer-foot">
+      <div class="drawer-total"><small>Total</small><strong id="drawer-total">₹0</strong><small id="drawer-total-note">for 2 travellers</small></div>
+      <div class="drawer-actions">
+        <button class="btn btn-ghost" id="drawer-back" type="button" hidden>Back</button>
+        <button class="btn btn-primary" id="drawer-next" type="button">Continue</button>
+      </div>
+    </footer>
+  </aside>
+
+  <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="false"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
